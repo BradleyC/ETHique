@@ -22,5 +22,13 @@ export default {
   },
   USE_ABI(state, abi) {
     state.abi = abi
+  },
+  ADD_ASSET(state, item) {
+    state.items.push(item)
+  },
+  REMOVE_ASSET(state, item) {
+    state.items = state.items.filter(
+      i => i.ref !== item.ref && i.id !== item.id
+    )
   }
 }

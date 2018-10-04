@@ -32,9 +32,9 @@ contract ImageRegistry {
     _;
   }
 
-  function addAsset(address ref, uint64 id) public assetExists(ref) {
-    allAssets[ref] = Asset(ref, id);
-    emit AssetAdded(ref, id, msg.sender);
+  function addAsset(address _ref, uint64 _id) public {
+    allAssets[_ref] = Asset(_ref, _id);
+    emit AssetAdded(_ref, _id, msg.sender);
   }
 
   function removeAsset(address ref) public onlyAdmin assetExists(ref) {
