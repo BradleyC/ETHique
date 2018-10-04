@@ -1,11 +1,11 @@
 <template>
   <div class="header">
     <div class="logo">
-      ImageRegistry.sol
+      <h3>🌌 Demo dApp</h3>
     </div>
-    <!-- TODO: This will display loading at first -->
     <div class="address">
-      <span >{{ acct }}</span>
+      <span v-if="acct">Account: {{ acct.substring(0, 16) }}...</span>
+      <span v-else>Loading account...</span>
     </div>
   </div>
 </template>
@@ -15,15 +15,13 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Header',
+
   computed: {
     ...mapGetters(['metamask', 'account']),
     acct() {
-      return this.metamask && this.account
-        ? `Loaded Address: ${this.account}`
-        : 'Loading account...'
+      return this.metamask && this.account ? this.account : null
     }
-  },
-  methods: {}
+  }
 }
 </script>
 
@@ -31,14 +29,15 @@ export default {
 @import '../scss/variables.scss';
 
 .header {
-  position: fixed;
   width: 100%;
-  height: 7vh;
   display: flex;
-  background-color: #fafffd;
+  background: $color2;
   justify-content: space-between;
+  padding: 10px 0;
 
-  .logo {
+  .logo,
+  .address {
+    margin: 0 20px;
   }
 
   .address {

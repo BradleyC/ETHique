@@ -14,8 +14,8 @@ export default {
   USE_ACCOUNT(state, account) {
     state.account = account
   },
-  USE_CONTRACT(state, { contract, address }) {
-    state.Contract = contract.at(address)
+  USE_CONTRACT(state, contract) {
+    state.Contract = contract
   },
   CLEAR_CONTRACT(state) {
     state.Contract = null
@@ -23,7 +23,4 @@ export default {
   USE_ABI(state, abi) {
     state.abi = abi
   }
-  // SET_W3DATA(state, w3Data) {
-  //   state.w3Data = w3Data
-  // }
 }

@@ -1,6 +1,26 @@
 <template>
   <div class="container">
-    <h1>Stuff!!</h1>
+    <h2>ImageRegistry</h2>
+
+    <div class="box">
+      <h3>Add Asset</h3>
+      <div class="form">
+        <input type="text" name="ref" value="" placeholder="Image Address">
+        <input type="text" name="id" value="" placeholder="Image ID">
+        <button class="btn">Submit</button>
+      </div>
+    </div>
+
+    <div class="list">
+      <div class="list-item">
+        <img src="" alt="">
+        <div class="copy">
+          <h4>Ref:</h4>
+          <p>ID:</p>
+        </div>
+        <button class="btn">Delete</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -14,6 +34,7 @@ export default {
 @import '../scss/variables.scss';
 
 .container {
-  min-height: 100vh;
+  margin: 20px auto;
+  max-width: 960px;
 }
 </style>
