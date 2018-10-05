@@ -34,10 +34,8 @@ export default {
 
   data() {
     return {
-      // newRef: null,
-      // newId: null
       newRef: '0x06012c8cf97bead5deae237070f9587f8e7a266d',
-      newId: 1066658
+      newId: 1066650
     }
   },
 

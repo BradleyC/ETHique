@@ -34,8 +34,6 @@ module.exports = {
           `https://rinkeby.infura.io/v3/${apiKey}`
         ),
       network_id: 4,
-      // gas: 3141592,
-      // gasPrice: 1000000000000
       gas: 4500000,
       gasPrice: 50000000000,
       value: 0
