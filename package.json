@@ -28,11 +28,13 @@
   "license": "Apache",
   "dependencies": {
     "axios": "^0.18.0",
+    "dotenv": "^6.0.0",
     "truffle-hdwallet-provider": "0.0.6",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
     "web3": "^1.0.0-beta.36",
+    "web3data-deploy": "^0.1.4",
     "web3data-js": "^0.3.3",
     "zeppelin-solidity": "^1.12.0"
   },

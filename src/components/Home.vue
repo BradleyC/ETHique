@@ -37,7 +37,7 @@ export default {
       // newRef: null,
       // newId: null
       newRef: '0x06012c8cf97bead5deae237070f9587f8e7a266d',
-      newId: 1066656
+      newId: 1066658
     }
   },
 
@@ -54,12 +54,10 @@ export default {
       }/${item.id}.svg`
     },
     deleteAsset(item) {
-      console.log('item', item)
-      this.removeAsset({ ref: this.newRef, id: parseInt(this.newId) })
+      this.removeAsset(item)
     },
     addAssetItem() {
       if (!this.newRef || !this.newId) return
-      console.log('new item', this.newRef)
       this.addAsset({ ref: this.newRef, id: parseInt(this.newId) })
     }
   }

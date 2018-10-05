@@ -14,10 +14,12 @@ export default {
     if (typeof window.web3 !== 'undefined') {
       web3Provider = window.web3.currentProvider
       try {
-        await web3Provider.enable()
-        console.log('web3Provider', web3Provider)
+        // Not quite ready yet
+        if (web3Provider.enable) await web3Provider.enable()
+        // console.log('web3Provider', web3Provider)
         commit('SET_METAMASK', true)
       } catch (e) {
+        console.log('e', e)
         commit('SET_METAMASK', false)
       }
     } else if (!state.retried) {
@@ -74,48 +76,28 @@ export default {
   async addAsset({ state, commit }, { ref, id }) {
     if (!ref || !state.Contract) return
     return new Promise((resolve, reject) => {
-      let txnHash
       state.Contract.methods
         .addAsset(ref, id)
-        .send({ from: state.account })
-        .then((e, h) => {
-          if (e) return reject(e)
-          txnHash = h
+        .send({ from: state.account, gas: 42000 })
+        .then(e => {
+          if (!e) return reject()
+          commit('ADD_ASSET', { ref: `${ref}`, id: `${id}` })
+          resolve(e)
         })
-
-      // [{ ref: state.account }],
-      state.Contract.events.AssetAdded([], (e, res) => {
-        if (e) reject(e)
-        if (res && res.transactionHash === txnHash) {
-          console.log('added res', res)
-          commit('ADD_ASSET', { res, id })
-          resolve(res)
-        }
-      })
     })
   },
 
   async removeAsset({ state, commit }, { ref, id }) {
     if (!ref || !state.Contract) return
     return new Promise((resolve, reject) => {
-      let txnHash
       state.Contract.methods
         .removeAsset(ref)
-        .call({ from: state.account })
-        .then((e, h) => {
-          if (e) return reject(e)
-          txnHash = h
+        .send({ from: state.account, gas: 42000 })
+        .then(e => {
+          if (!e) return reject(e)
+          commit('REMOVE_ASSET', { ref: `${ref}`, id: `${id}` })
+          resolve(e)
         })
-
-      // [{ ref: state.account }],
-      state.Contract.events.AssetRemoved([], (e, res) => {
-        if (e) reject(e)
-        if (res && res.transactionHash === txnHash) {
-          console.log('removed res', res)
-          commit('REMOVE_ASSET', { res, id })
-          resolve(res)
-        }
-      })
     })
   }
 }

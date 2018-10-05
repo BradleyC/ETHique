@@ -24,11 +24,21 @@ export default {
     state.abi = abi
   },
   ADD_ASSET(state, item) {
-    state.items.push(item)
+    const arr = state.items
+    arr.push(item)
+    state.items = arr
   },
   REMOVE_ASSET(state, item) {
-    state.items = state.items.filter(
-      i => i.ref !== item.ref && i.id !== item.id
-    )
+    const arr = state.items
+    let idx
+
+    state.items.forEach((i, id) => {
+      if (i.ref === item.ref && i.id === item.id) idx = id
+    })
+
+    if (idx) {
+      arr.splice(idx, 1)
+      state.items = arr
+    }
   }
 }
