@@ -6,6 +6,7 @@ pragma solidity ^0.4.24;
  */
 contract ImageRegistry {
   address public owner;
+  uint public total;
 
   /// @dev Events
   event AssetAdded(address indexed ref, uint64 id, address sender);
@@ -17,8 +18,10 @@ contract ImageRegistry {
     owner = msg.sender;
   }
 
+  // Add new Image
   function addAsset(address ref, uint64 id) public {
     allAssets[ref] = id;
+    total = total + 1;
     emit AssetAdded(ref, id, msg.sender);
   }
 
