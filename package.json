@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A quick dapp built to showcase amberdata at trufflecon!",
   "main": "index.js",
-  "directories": {  
+  "directories": {
     "test": "test"
   },
   "scripts": {
