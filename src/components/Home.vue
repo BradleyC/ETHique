@@ -1,21 +1,21 @@
 <template>
-  <div class="container">
-  </div>
+  <div class="container" />
 </template>
 
 <script>
-
 export default {
   name: 'Home',
 
   data() {
-    },
+    // pass
+  },
 
   computed: {
+    // pass
   },
 
   methods: {
-    
+    // pass
   }
 }
 </script>
