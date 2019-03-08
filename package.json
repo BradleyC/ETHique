@@ -1,9 +1,9 @@
 {
-  "name": "truffle-demo-dapp",
+  "name": "ÉTHique",
   "version": "0.0.1",
   "description": "A quick dapp built to showcase amberdata at trufflecon!",
   "main": "index.js",
-  "directories": {
+  "directories": {  
     "test": "test"
   },
   "scripts": {
@@ -18,13 +18,12 @@
   },
   "keywords": [
     "Ethereum",
-    "Truffle",
     "Vue",
-    "web3data",
     "blockchain",
-    "smart contracts"
+    "Twitter",
+    "Cryptoeconomics"
   ],
-  "author": "@trevorjtclarke",
+  "author": "@bradleyc, @gabejibarra",
   "license": "Apache",
   "dependencies": {
     "axios": "^0.18.0",
