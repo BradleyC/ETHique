@@ -23,7 +23,7 @@
     "Twitter",
     "Cryptoeconomics"
   ],
-  "author": "@bradleyc, @gabejibarra",
+  "author": "@bradleyc, @gabeibarra",
   "license": "Apache",
   "dependencies": {
     "axios": "^0.18.0",
