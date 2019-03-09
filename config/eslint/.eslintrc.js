@@ -49,6 +49,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     "semi": [2, "never"],
+    "vue/html-self-closing": "off",
     "no-console": "off",
     "vue/max-attributes-per-line": "off",
     "vue/require-prop-types": "off",

@@ -1,29 +1,45 @@
 <template>
   <div class="container">
-    <div v-for="post in statusFeed">
-      <Status :post="post" />
+    <div class="box">
+      <img :src="post.user.profile_image_url_https" />
+      <h3>{{ post.user.name }}</h3>
+      <h4>@{{ post.user.screen_name }}</h4>
+      <p>{{ post.full_text }}</p>
+      <div class="engage">
+        <div class="like-div">
+          <img v-if="post.favorited" src="../static/2B50.svg" />
+          <img v-else src="../static/1F31F.svg" />
+        </div>
+      </div>
+      <p>Favorited: {{ post.favorited }}</p>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
-import Status from './Status.vue'
+// import { mapActions, mapGetters } from 'vuex'
 
 export default {
-  name: 'Posts',
-  components: { Status },
-
-  computed: {
-    ...mapGetters(['statusFeed'])
-  },
-  mounted() {
-    this.getPosts()
-  },
-
-  methods: {
-    ...mapActions(['getPosts'])
+  name: 'Status',
+  props: {
+    post: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
   }
+
+  // computed: {
+  //   ...mapGetters(['statusFeed'])
+  // },
+  // mounted() {
+  //   this.getPosts()
+  // },
+
+  // methods: {
+  //   ...mapActions(['getPosts'])
+  // }
 }
 </script>
 
@@ -53,6 +69,7 @@ h2 {
   width: 30vw;
   min-width: 300px;
   margin: auto;
+  margin-bottom: 20px;
 
   h3 {
     margin: 0 0 10px;
