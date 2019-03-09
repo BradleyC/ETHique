@@ -4,8 +4,8 @@
       <!-- <img :src="post.user.profile_image_url_https" /> -->
       <h3>{{ post.user.name }}</h3>
       <h4>@{{ post.user.screen_name }}</h4>
-      <h4>{{ post.text }}</h4>
-      <h4>Favorited: {{ post.favorited }}</h4>
+      <p>{{ post.full_text }}</p>
+      <p>Favorited: {{ post.favorited }}</p>
     </div>
   </div>
 </template>
