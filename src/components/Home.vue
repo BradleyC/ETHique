@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Posts from './Posts'
+import Posts from './Posts.vue'
 export default {
   name: 'Home',
   components: {
@@ -13,7 +13,7 @@ export default {
   },
 
   data() {
-    // pass
+    return {}
   },
 
   computed: {

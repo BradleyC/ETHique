@@ -32,7 +32,11 @@ function genResponse(statusCode, body) {
   };
   return response;
 }
-
+/** 
+ * Starting with this endpoint. Returns most recent tweets for user and followed:
+ * https://api.twitter.com/1.1/statuses/home_timeline.json
+ * relevant params: count, since_id, exclude_replies
+ */
 function getPosts(event) {
   var T = new Twit({
     consumer_key:         process.env.API_KEY,
@@ -43,7 +47,8 @@ function getPosts(event) {
     // strictSSL:            true,     // optional - requires SSL certificates to be valid.
   });
   return new Promise(async (resolve, reject) => {
-    T.get('search/tweets', { q: 'ethereum since:2019-03-01', count: 20 }, function(err, data, response) {
+    // T.get('search/tweets', { q: 'ethereum since:2019-03-01', count: 20 }, function(err, data, response) {
+    T.get('statuses/home_timeline', {  count: 20 }, function(err, data, response) {
       if (err) {
         console.log(err);
         reject(err);

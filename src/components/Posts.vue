@@ -1,17 +1,22 @@
 <template>
-  <div class="container" />
+  <div class="container">
+    <div class="box" v-for="post in statusFeed">
+      <h4>{{ post.user.screen_name }}</h4>
+      <h4>{{ post.text }}</h4>
+      <h4>Favorited: {{ post.favorited }}</h4>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Posts',
 
-  data() {
-    // pass
+  computed: {
+    ...mapGetters(['statusFeed'])
   },
-
   mounted() {
     this.getPosts()
   },

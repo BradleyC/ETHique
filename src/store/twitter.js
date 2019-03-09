@@ -2,28 +2,45 @@ import axios from 'axios'
 
 export default {
   getters: {
-    // profile: state => state.profile,
-    // idToken: state => state.idToken
+    statusFeed: state => state.statusFeed
   },
   mutations: {
-    // SET_PROFILE: setProfile,
-    // SET_TOKEN: setIdToken
+    UPDATE_FEED: updateFeed
   },
   state: {
-    // idToken: '',
-    // profile: {}
+    statusFeed: []
   },
   actions: {
     getPosts: getPosts
   }
 }
 /**
- * TODO: client request is not accepted by twitter API. Switch to serverside
- * Starting with this endpoint. Returns most recent tweets for user and followed:
- * https://api.twitter.com/1.1/statuses/home_timeline.json
- * relevant params: count, since_id, exclude_replies
+ * library seeems to return object like:
+ * home_timeline or user_timeline return somethig like this:
+ * response.data: [ list tweet objects ]
+ *
+ * if using 'search/tweets', { q: 'ethereum since:2019-03-01', count: 20 }
+ * Data looks like:
+ * response.data: {
+ *   search_metadata: {
+ *     completed_in: 0.041
+ *     count: 20
+ *     max_id: 1104382389579640800
+ *     max_id_str: "1104382389579640837"
+ *     next_results: "?max_id=1104381926280851466&q=ethereum%20since%3A2019-03-01&count=20&include_entities=1"
+ *     query: "ethereum+since%3A2019-03-01"
+ *     refresh_url: "?since_id=1104382389579640837&q=ethereum%20since%3A2019-03-01&include_entities=1"
+ *     since_id: 0
+ *     since_id_str: "0"
+ *   }
+ *   statuses: [ list tweet objects ]
+ * }
+ * Tweet Keys of interest:
+ * text
+ * user.screen_name
+ * favorited
  */
-async function getPosts({ rootState }) {
+async function getPosts({ commit, rootState }) {
   while (!rootState.accessToken.token) {
     console.log('waiting for twitter auth')
     await waitFor()
@@ -45,9 +62,15 @@ async function getPosts({ rootState }) {
       reject(error)
     })
     if (tokenErr) return
+
     console.log(response)
-    console.log(resolve)
+    commit('UPDATE_FEED', response.data)
+    resolve(true)
   })
+}
+
+function updateFeed(state, data) {
+  state.statusFeed = data
 }
 
 // function requestToken() {
