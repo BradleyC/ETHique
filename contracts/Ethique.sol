@@ -79,7 +79,7 @@ contract Ethique {
         _transfer(address(this), _newUser, 500);
         emit newUser(_newUser);
         return true;
-    }
+    } 
 
     function getRegisteredUsers() public onlyOwner(msg.sender) returns (address[] memory users) {
         return registeredUsers;
