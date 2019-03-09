@@ -1,4 +1,4 @@
-// import abi from '../../build/contracts/ImageRegistry.json'
+import abi from '../../build/contracts/Ethique.json'
 
 export default {
   retried: false,
@@ -8,7 +8,7 @@ export default {
   Contract: null,
   contractAddress: null,
   rpcUrl: null,
-  abi: null,
+  abi,
   items: [
     {
       ref: '0x06012c8cf97bead5deae237070f9587f8e7a266d',
