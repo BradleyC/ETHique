@@ -21,5 +21,5 @@ export default {
   ],
   provider: {},
   user: {},
-  accessToken: ''
+  accessToken: {}
 }

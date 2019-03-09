@@ -1,7 +1,5 @@
 import axios from 'axios'
 
-const apiBase = 'https://api.twitter.com/1.1/'
-
 export default {
   getters: {
     // profile: state => state.profile,
@@ -26,19 +24,17 @@ export default {
  * relevant params: count, since_id, exclude_replies
  */
 async function getPosts({ rootState }) {
-  while (!rootState.accessToken) {
+  while (!rootState.accessToken.token) {
     console.log('waiting for twitter auth')
     await waitFor()
   }
   console.log(rootState.accessToken)
   var params = {
     method: 'GET',
-    url: apiBase + 'statuses/home_timeline.json',
-    params: {
-      count: 20
-    },
-    header: {
-      authorization: 'Bearer ' + rootState.accessToken
+    url: process.env.SERVER + '/tweets',
+    headers: {
+      oauth_token: rootState.accessToken.token,
+      oauth_consumer_key: rootState.accessToken.key
     }
   }
   return new Promise(async (resolve, reject) => {
