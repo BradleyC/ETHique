@@ -48,7 +48,7 @@ function getPosts(event) {
   });
   return new Promise(async (resolve, reject) => {
     // T.get('search/tweets', { q: 'ethereum since:2019-03-01', count: 20 }, function(err, data, response) {
-    T.get('statuses/home_timeline', {  count: MAXPOSTS }, function(err, data, response) {
+    T.get('statuses/home_timeline', {  count: MAXPOSTS, tweet_mode: "extended" }, function(err, data, response) {
       if (err) {
         console.log(err);
         reject(err);

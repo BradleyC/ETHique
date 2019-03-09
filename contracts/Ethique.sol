@@ -39,7 +39,7 @@ contract Ethique {
         name = tokenName;
         symbol = tokenSymbol;
         owners[msg.sender] = true;
-        _transfer(msg.sender, address(this), 2000000000000);
+        _transfer(msg.sender, address(this), 200000000000);
     }
 
     function interact(address _sender, address _recipient, uint _value) public onlyRegisteredUser(_sender) {
