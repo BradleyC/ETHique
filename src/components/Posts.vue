@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="box" v-for="post in statusFeed">
-      <img :src="'post.user.profile_image_url_https' + img" alt="dogestyle" />
+      <!-- <img :src="post.user.profile_image_url_https" /> -->
       <h3>{{ post.user.name }}</h3>
       <h4>@{{ post.user.screen_name }}</h4>
       <h4>{{ post.text }}</h4>
