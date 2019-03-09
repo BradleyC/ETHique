@@ -43,5 +43,11 @@ export default {
   },
   SET_PROVIDER(state, provider) {
     state.provider = provider
+  },
+  SET_USER(state, user) {
+    state.user = user
+  },
+  SET_TOKEN(state, accessToken) {
+    state.accessToken = accessToken
   }
 }

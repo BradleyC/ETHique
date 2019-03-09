@@ -7,5 +7,7 @@ export default {
   // w3Data: state => state.w3Data,
   abi: state => state.abi,
   items: state => state.items,
-  provider: state => state.provider
+  provider: state => state.provider,
+  user: state => state.user,
+  accessToken: state => state.accessToken
 }

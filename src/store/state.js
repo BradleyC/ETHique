@@ -19,5 +19,7 @@ export default {
       id: '1066657'
     }
   ],
-  provider: {}
+  provider: {},
+  user: {},
+  accessToken: ''
 }

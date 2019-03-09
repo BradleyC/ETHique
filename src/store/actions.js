@@ -85,13 +85,11 @@ export default {
       storageBucket: 'ethique-7ac33.appspot.com',
       messagingSenderId: '333113931320'
     }
-    console.log(config)
     firebase.initializeApp(config)
     var provider = new firebase.auth.TwitterAuthProvider()
-    console.log(provider)
     commit('SET_PROVIDER', provider)
   },
-  handleLogin({ state }) {
+  handleLogin({ commit, state }) {
     if (!state.provider) console.log('hello')
     if (!state.provider) return
     console.log(state.provider)
@@ -107,6 +105,8 @@ export default {
         // The signed-in user info.
         // var user = result.user
         // ...
+        commit('SET_TOKEN', result.credential.accessToken)
+        commit('SET_USER', { username: result.additionalUserInfo.username })
       })
       .catch(function(error) {
         console.log(error)

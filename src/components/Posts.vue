@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Posts',
 
@@ -10,12 +12,12 @@ export default {
     // pass
   },
 
-  computed: {
-    // pass
+  mounted() {
+    this.getPosts()
   },
 
   methods: {
-    // pass
+    ...mapActions(['getPosts'])
   }
 }
 </script>

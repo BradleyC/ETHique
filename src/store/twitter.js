@@ -1,4 +1,6 @@
-// import axios from 'axios'
+import axios from 'axios'
+
+const apiBase = 'https://api.twitter.com/1.1/'
 
 export default {
   getters: {
@@ -14,17 +16,29 @@ export default {
     // profile: {}
   },
   actions: {
-    // handleLogin: handleLogin
+    getPosts: getPosts
   }
 }
-
-function requestToken() {
+/**
+ * TODO: client request is not accepted by twitter API. Switch to serverside
+ * Starting with this endpoint. Returns most recent tweets for user and followed:
+ * https://api.twitter.com/1.1/statuses/home_timeline.json
+ * relevant params: count, since_id, exclude_replies
+ */
+async function getPosts({ rootState }) {
+  while (!rootState.accessToken) {
+    console.log('waiting for twitter auth')
+    await waitFor()
+  }
+  console.log(rootState.accessToken)
   var params = {
-    method: 'POST',
-    url: 'https://api.twitter.com/oauth/request_token',
+    method: 'GET',
+    url: apiBase + 'statuses/home_timeline.json',
     params: {
-      oauth_consumer_key: process.env.TWITTER,
-      oauth_callback: 'http://localhost:4000'
+      count: 20
+    },
+    header: {
+      authorization: 'Bearer ' + rootState.accessToken
     }
   }
   return new Promise(async (resolve, reject) => {
@@ -36,8 +50,8 @@ function requestToken() {
     })
     if (tokenErr) return
     console.log(response)
+    console.log(resolve)
   })
-}
 }
 
 // function requestToken() {
@@ -61,3 +75,6 @@ function requestToken() {
 //   })
 // }
 // }
+function waitFor() {
+  return new Promise(resolve => setTimeout(resolve, 200))
+}

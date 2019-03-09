@@ -5,6 +5,7 @@
     </div>
     <div class="address">
       <span v-if="acct">Account: {{ acct.substring(0, 16) }}...</span>
+      <span v-if="userName">@{{ userName }}</span>
       <span v-else>
         <button class="btn" @click="handleLogin">Sign in with Twitter</button>
       </span>
@@ -19,7 +20,14 @@ export default {
   name: 'Header',
 
   computed: {
-    ...mapGetters(['metamask', 'account']),
+    ...mapGetters(['user', 'account']),
+    userName() {
+      console.log(this.user)
+      if (this.user) {
+        console.log(this.user)
+        return this.user.username
+      }
+    },
     acct() {
       return this.metamask && this.account ? this.account : null
     }
