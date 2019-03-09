@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="logo">
-      <h3>🌌 Demo dApp</h3>
+      <h3>🥐 Éthique</h3>
     </div>
     <div class="address">
       <!-- <span v-if="acct">Account: {{ acct.substring(0, 16) }}...</span> -->
