@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <span>TODO: Add a tip jar here</span>
+    <span>TODO: Add something fun here</span>
   </footer>
 </template>
 

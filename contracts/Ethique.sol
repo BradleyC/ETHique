@@ -10,12 +10,17 @@ contract Ethique {
     string public name;
     string public symbol;
     uint256 public totalSupply;
+    uint256 dmStakeReserve;
     address[] public registeredUsers;
     uint8 public decimals = 0;
 
     mapping (address => uint256) public balanceOf;
     mapping (address => mapping (address => uint256)) public allowance;
     mapping (address => bool) registrationIndex;
+    mapping (address => uint) dmStake;
+    mapping (address => uint) dmDeposited;
+    mapping (uint => uint) msgToStake;
+    mapping (uint => address) msgToSender;
 
     // events
     event Transfer(address indexed from, address indexed to, uint256 value);
@@ -38,9 +43,37 @@ contract Ethique {
         _transfer(_sender, _recipient, _value);
     }
 
+    function setDmStake(uint _value) public onlyRegisteredUser(msg.sender) {
+        dmStake[msg.sender] = _value;
+    }
+
+    function sendDm(address _recipient, uint _value, uint message_id) public {
+        require(_value >= dmStake[_recipient], "must meet user required stake");
+        _transfer(msg.sender, address(this), _value);
+        dmDeposited[_recipient] = dmDeposited[_recipient] + _value;
+        dmStakeReserve = dmStakeReserve + _value;
+        msgToStake[message_id] = _value;
+        msgToSender[message_id] = msg.sender;
+    }
+
+    function rejectDm(uint _message_id) public {
+        uint stake = msgToStake[_message_id];
+        dmDeposited[msg.sender] = dmDeposited[msg.sender] - stake;
+        dmStakeReserve = dmStakeReserve - stake;
+    }
+
+    function acceptDm(uint _message_id) public {
+        uint stake = msgToStake[_message_id];
+        _transfer(address(this), msgToSender[_message_id], stake);
+        dmDeposited[msg.sender] = dmDeposited[msg.sender] - stake;
+        dmStakeReserve = dmStakeReserve - stake;
+    }
+
     function registerUser(address payable _newUser) public returns (bool success) {
+        require(registrationIndex[_newUser] = false, "only one registration");
         registeredUsers.push(_newUser);
         registrationIndex[_newUser] = true;
+        _transfer(address(this), _newUser, 500);
         emit newUser(_newUser);
         return true;
     }

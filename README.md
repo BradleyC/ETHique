@@ -1,10 +1,5 @@
-# Trufflecon Demo dApp
+Bring blockchain to the people.
 
-A quick dapp built to showcase amberdata at trufflecon!
+Sanity to Twitter.
 
-### Get Started:
-
-```
-  $: npm install
-  $: npm run dev
-```
+Cryptoeconomics for humanity.
