@@ -180,7 +180,7 @@ export default {
       if (loginErr) return
       console.log('contract getRegisteredUsers() result: ', registeredUsers)
       for (var i = 0; i < registeredUsers.length; i++) {
-        if (registeredUsers[i] === state.account) {
+        if (registeredUsers[i] === address) {
           reject('User already registered')
           alert('User already registered. Something is wrong.')
           return
