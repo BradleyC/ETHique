@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <div class="box" v-for="post in statusFeed">
-      <h4>{{ post.user.screen_name }}</h4>
+      <img :src="'post.user.profile_image_url_https' + img" alt="dogestyle" />
+      <h3>{{ post.user.name }}</h3>
+      <h4>@{{ post.user.screen_name }}</h4>
       <h4>{{ post.text }}</h4>
       <h4>Favorited: {{ post.favorited }}</h4>
     </div>

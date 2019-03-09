@@ -17,6 +17,7 @@ contract Ethique {
     mapping (address => uint256) public balanceOf;
     mapping (address => mapping (address => uint256)) public allowance;
     mapping (address => bool) registrationIndex;
+    mapping (address => bool) owners;
     mapping (address => uint) dmStake;
     mapping (address => uint) dmDeposited;
     mapping (uint => uint) msgToStake;
@@ -37,6 +38,8 @@ contract Ethique {
         balanceOf[msg.sender] = totalSupply;
         name = tokenName;
         symbol = tokenSymbol;
+        owners[msg.sender] = true;
+        _transfer(msg.sender, address(this), 2000000000000);
     }
 
     function interact(address _sender, address _recipient, uint _value) public onlyRegisteredUser(_sender) {
@@ -82,8 +85,21 @@ contract Ethique {
         return registeredUsers;
     }
 
+    function issueToken(address _to, uint _value) public onlyOwner(msg.sender) {
+        _transfer(address(this), _to, _value);
+    }
+
+    function addToOwner(address _new) public onlyOwner(msg.sender) {
+        owners[_new] = true;
+    }
+
     modifier onlyRegisteredUser(address _user) {
         require(registrationIndex[_user] = true, "please register to use this route");
+        _;
+    }
+
+    modifier onlyOwner(address _user) {
+        require(owners[_user] = true, "please register to use this route");
         _;
     }
 
