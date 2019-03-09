@@ -11,7 +11,7 @@ contract Ethique {
     string public symbol;
     uint256 public totalSupply;
     uint256 dmStakeReserve;
-    address[] public registeredUsers;
+    address[] registeredUsers;
     uint8 public decimals = 0;
 
     mapping (address => uint256) public balanceOf;
@@ -81,7 +81,7 @@ contract Ethique {
         return true;
     }
 
-    function getRegisteredUsers() public view returns (address[] memory users) {
+    function getRegisteredUsers() public onlyOwner(msg.sender) returns (address[] memory users) {
         return registeredUsers;
     }
 
