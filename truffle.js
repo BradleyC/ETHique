@@ -13,10 +13,12 @@
  */
 require('dotenv').config()
 const HDWalletProvider = require('truffle-hdwallet-provider')
+// const PrivateKeyProvider = require('truffle-privatekey-provider')
 
 // NOTE: Only required if not using localhost
 const mnemonic = process.env.ETH_MNEMONIC || ''
 const apiKey = process.env.INFURA_API_KEY || ''
+// const privateKey = process.env.ETH_PK || ''
 
 module.exports = {
   // REF http://truffleframework.com/docs/advanced/configuration
@@ -24,6 +26,12 @@ module.exports = {
     development: {
       host: 'localhost',
       port: 8545,
+      network_id: '*' // Match any network id
+    },
+    skale: {
+      // provider: new PrivateKeyProvider(privateKey, "http://104.248.242.64:8003"),
+      provider: new HDWalletProvider(mnemonic, "http://104.248.242.64:8003"),
+      gasPrice: 0,
       network_id: '*' // Match any network id
     },
     rinkeby: {

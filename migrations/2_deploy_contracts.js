@@ -1,7 +1,5 @@
-const fs = require('fs')
-const path = require('path')
-const ImageRegistry = artifacts.require('./ImageRegistry.sol')
+const ethique = artifacts.require('./Ethique.sol')
 
 module.exports = async deployer => {
-  deployer.deploy(ImageRegistry)
+  deployer.deploy(ethique, 666666666666666, "tweet", "TWEET")
 }
