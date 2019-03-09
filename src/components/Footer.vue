@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <span>TODO: Add something fun here</span>
+    <span>Made for you. 🍃 Let's make the world better together.</span>
   </footer>
 </template>
 
