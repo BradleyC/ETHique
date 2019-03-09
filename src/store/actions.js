@@ -1,4 +1,5 @@
 import Web3 from 'web3'
+import firebase from 'firebase'
 
 const getAbiDeployedAddress = abi => {
   if (!abi) return ''
@@ -10,6 +11,7 @@ export default {
   // Connect to a known web3 provider
   // https://gist.github.com/bitpshr/076b164843f0414077164fe7fe3278d9#file-provider-enable-js
   async connect({ commit, state, dispatch }) {
+    dispatch('initFirebase')
     let web3Provider = false
     if (typeof window.web3 !== 'undefined') {
       web3Provider = window.web3.currentProvider
@@ -73,31 +75,49 @@ export default {
     }
   },
 
-  async addAsset({ state, commit }, { ref, id }) {
-    if (!ref || !state.Contract) return
-    return new Promise((resolve, reject) => {
-      state.Contract.methods
-        .addAsset(ref, id)
-        .send({ from: state.account, gas: 42000 })
-        .then(e => {
-          if (!e) return reject()
-          commit('ADD_ASSET', { ref: `${ref}`, id: `${id}` })
-          resolve(e)
-        })
-    })
+  initFirebase({ commit }) {
+    // Initialize Firebase
+    var config = {
+      apiKey: 'AIzaSyBzhMRRg-EGNSXEr5l6CWy25NwQuE3F-D8',
+      authDomain: 'ethique-7ac33.firebaseapp.com',
+      databaseURL: 'https://ethique-7ac33.firebaseio.com',
+      projectId: 'ethique-7ac33',
+      storageBucket: 'ethique-7ac33.appspot.com',
+      messagingSenderId: '333113931320'
+    }
+    firebase.initializeApp(config)
+    var provider = new firebase.auth.TwitterAuthProvider()
+    commit('SET_PROVIDER', provider)
   },
-
-  async removeAsset({ state, commit }, { ref, id }) {
-    if (!ref || !state.Contract) return
-    return new Promise((resolve, reject) => {
-      state.Contract.methods
-        .removeAsset(ref)
-        .send({ from: state.account, gas: 42000 })
-        .then(e => {
-          if (!e) return reject(e)
-          commit('REMOVE_ASSET', { ref: `${ref}`, id: `${id}` })
-          resolve(e)
-        })
-    })
+  handleLogin({ commit, state }) {
+    if (!state.provider) console.log('hello')
+    if (!state.provider) return
+    console.log(state.provider)
+    firebase
+      .auth()
+      .signInWithPopup(state.provider)
+      .then(function(result) {
+        console.log(result)
+        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+        // You can use these server side with your app's credentials to access the Twitter API.
+        // var token = result.credential.accessToken
+        // var secret = result.credential.secret
+        // The signed-in user info.
+        // var user = result.user
+        // ...
+        commit('SET_TOKEN', result.credential.accessToken)
+        commit('SET_USER', { username: result.additionalUserInfo.username })
+      })
+      .catch(function(error) {
+        console.log(error)
+        // Handle Errors here.
+        // var errorCode = error.code
+        // var errorMessage = error.message
+        // The email of the user's account used.
+        // var email = error.email
+        // The firebase.auth.AuthCredential type that was used.
+        // var credential = error.credential
+        // ...
+      })
   }
 }

@@ -4,6 +4,7 @@ import actions from './actions'
 import getters from './getters'
 import mutations from './mutations'
 import state from './state'
+import twitter from './twitter'
 
 Vue.use(Vuex)
 
@@ -12,5 +13,8 @@ export default new Vuex.Store({
   getters,
   actions,
   mutations,
-  strict: false
+  strict: false,
+  modules: {
+    twitter: twitter
+  }
 })

@@ -1,21 +1,27 @@
 <template>
   <div class="container">
+    <Posts />
   </div>
 </template>
 
 <script>
-
+import Posts from './Posts'
 export default {
   name: 'Home',
+  components: {
+    Posts
+  },
 
   data() {
-    },
+    // pass
+  },
 
   computed: {
+    // pass
   },
 
   methods: {
-    
+    // pass
   }
 }
 </script>
