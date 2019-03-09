@@ -1,5 +1,6 @@
 import Web3 from 'web3'
 import firebase from 'firebase'
+import axios from 'axios'
 
 const getAbiDeployedAddress = abi => {
   if (!abi) return ''
@@ -90,34 +91,59 @@ export default {
     commit('SET_PROVIDER', provider)
   },
   handleLogin({ commit, state }) {
-    if (!state.provider) console.log('hello')
-    if (!state.provider) return
-    console.log(state.provider)
-    firebase
-      .auth()
-      .signInWithPopup(state.provider)
-      .then(function(result) {
-        console.log(result)
-        // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
-        // You can use these server side with your app's credentials to access the Twitter API.
-        // var token = result.credential.accessToken
-        // var secret = result.credential.secret
-        // The signed-in user info.
-        // var user = result.user
-        // ...
-        commit('SET_TOKEN', result.credential.accessToken)
-        commit('SET_USER', { username: result.additionalUserInfo.username })
+    return new Promise(async (resolve, reject) => {
+      var loginErr
+      if (!state.provider) console.log('hello')
+      if (!state.provider) return
+      console.log(state.provider)
+      var result = await firebase
+        .auth()
+        .signInWithPopup(state.provider)
+        .catch(function(error) {
+          console.log(error)
+          loginErr = true
+          reject(error)
+          // Handle Errors here.
+          // var errorCode = error.code
+          // var errorMessage = error.message
+          // The email of the user's account used.
+          // var email = error.email
+          // The firebase.auth.AuthCredential type that was used.
+          // var credential = error.credential
+          // ...
+        })
+      if (loginErr) return
+      console.log(result)
+      // This gives you a the Twitter OAuth 1.0 Access Token and Secret.
+      // You can use these server side with your app's credentials to access the Twitter API.
+      // var token = result.credential.accessToken
+      // var secret = result.credential.secret
+      // The signed-in user info.
+      // var user = result.user
+      // ...
+      commit('SET_TOKEN', {
+        token: result.credential.accessToken,
+        key: result.credential.secret
       })
-      .catch(function(error) {
+      commit('SET_USER', { username: result.additionalUserInfo.username })
+
+      // Send to login API for contract account mgmt
+      console.log(state.username)
+      var params = {
+        method: 'POST',
+        url: `${process.env.SERVER}/login`,
+        // headers: {
+        //   Authorization: auth.id_token
+        // }
+        data: { handle: state.user.username }
+      }
+      var response = await axios(params).catch(error => {
         console.log(error)
-        // Handle Errors here.
-        // var errorCode = error.code
-        // var errorMessage = error.message
-        // The email of the user's account used.
-        // var email = error.email
-        // The firebase.auth.AuthCredential type that was used.
-        // var credential = error.credential
-        // ...
+        loginErr = true
+        reject(error)
       })
+      console.log(response)
+      resolve(response)
+    })
   }
 }
