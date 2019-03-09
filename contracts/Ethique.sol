@@ -70,8 +70,10 @@ contract Ethique {
     }
 
     function registerUser(address payable _newUser) public returns (bool success) {
+        require(registrationIndex[_newUser] = false, "only one registration");
         registeredUsers.push(_newUser);
         registrationIndex[_newUser] = true;
+        _transfer(address(this), _newUser, 500);
         emit newUser(_newUser);
         return true;
     }
