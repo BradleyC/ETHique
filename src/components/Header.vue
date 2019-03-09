@@ -13,7 +13,7 @@
         </div>
       </div>
       <div v-else>
-        <button class="btn" @click="handleLogin">Sign in with Twitter</button>
+        <button class="btn" @click="handleLogin">Sign in to Twitter</button>
       </div>
     </div>
   </div>
