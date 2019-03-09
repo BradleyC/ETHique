@@ -9,16 +9,19 @@ contract Ethique {
     // storage 
     string public name;
     string public symbol;
-    uint8 public decimals = 0;
     uint256 public totalSupply;
+    address[] public registeredUsers;
+    uint8 public decimals = 0;
 
     mapping (address => uint256) public balanceOf;
     mapping (address => mapping (address => uint256)) public allowance;
+    mapping (address => bool) registrationIndex;
 
     // events
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed _owner, address indexed _spender, uint256 _value);
     event Burn(address indexed from, uint256 value);
+    event newUser(address user);
 
     constructor(
         uint256 initialSupply,
@@ -29,6 +32,26 @@ contract Ethique {
         balanceOf[msg.sender] = totalSupply;
         name = tokenName;
         symbol = tokenSymbol;
+    }
+
+    function interact(address _sender, address _recipient, uint _value) public onlyRegisteredUser(_sender) {
+        _transfer(_sender, _recipient, _value);
+    }
+
+    function registerUser(address payable _newUser) public returns (bool success) {
+        registeredUsers.push(_newUser);
+        registrationIndex[_newUser] = true;
+        emit newUser(_newUser);
+        return true;
+    }
+
+    function getRegisteredUsers() public view returns (address[] memory users) {
+        return registeredUsers;
+    }
+
+    modifier onlyRegisteredUser(address _user) {
+        require(registrationIndex[_user] = true, "please register to use this route");
+        _;
     }
 
     function _transfer(address _from, address _to, uint _value) internal {
