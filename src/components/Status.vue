@@ -1,15 +1,19 @@
 <template>
   <div class="container">
     <div class="box">
-      <img :src="post.user.profile_image_url_https" />
+      <!-- <img :src="post.user.profile_image_url_https" /> -->
       <h3>{{ post.user.name }}</h3>
       <h4>@{{ post.user.screen_name }}</h4>
       <p>{{ post.full_text }}</p>
       <div class="engage">
-        <div class="like-div">
-          <img v-if="post.favorited" src="../static/2B50.svg" />
-          <img v-else src="../static/1F31F.svg" />
-        </div>
+        <button v-if="post.favorited" class="btn engage-btn">
+          <img src="../static/1F31F.svg" />
+          <span>Liked</span>
+        </button>
+        <button v-else class="btn engage-btn">
+          <img src="../static/2B50.svg" />
+          <span>Like</span>
+        </button>
       </div>
       <p>Favorited: {{ post.favorited }}</p>
     </div>
@@ -114,6 +118,21 @@ h2 {
     text-overflow: ellipsis;
     white-space: nowrap;
     margin: 0 0 5px;
+  }
+}
+
+.engage {
+  height: 30px;
+}
+.engage-btn {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  justify-content: space-around;
+  padding: 1px;
+
+  img {
+    width: 28px;
   }
 }
 </style>
