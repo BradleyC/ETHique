@@ -5,3 +5,4 @@ haters/
 .editorconfig
 dist
 node_modules
+build/contracts/

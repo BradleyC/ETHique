@@ -31,20 +31,17 @@
     "dotenv": "^6.0.0",
     "firebase": "^5.8.6",
     "ganache-cli": "^6.2.5",
-    "openzeppelin-solidity": "^2.1.2",
     "scrypt": "^6.0.3",
     "truffle": "^5.0.4",
-    "truffle-hdwallet-provider": "0.0.6",
+    "truffle-hdwallet-provider": "^1.0.3",
     "typeface-domine": "0.0.54",
     "vue": "^2.5.17",
-    "vue-analytics": "^5.16.1",
     "vue-animejs": "^2.0.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1",
-    "web3": "^1.0.0-beta.36",
+    "web3": "^1.0.0-beta.35",
     "web3data-deploy": "^0.1.4",
-    "web3data-js": "^0.3.3",
-    "zeppelin-solidity": "^1.12.0"
+    "web3data-js": "^0.3.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.1.0",
