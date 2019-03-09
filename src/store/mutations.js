@@ -40,5 +40,8 @@ export default {
       arr.splice(idx, 1)
       state.items = arr
     }
+  },
+  SET_PROVIDER(state, provider) {
+    state.provider = provider
   }
 }

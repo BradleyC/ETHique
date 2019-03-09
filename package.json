@@ -29,6 +29,7 @@
     "acorn": "^6.1.0",
     "axios": "^0.18.0",
     "dotenv": "^6.0.0",
+    "firebase": "^5.8.6",
     "ganache-cli": "^6.2.5",
     "openzeppelin-solidity": "^2.1.2",
     "scrypt": "^6.0.3",
