@@ -4,11 +4,17 @@
       <h3>🌌 Demo dApp</h3>
     </div>
     <div class="address">
-      <span v-if="acct">Account: {{ acct.substring(0, 16) }}...</span>
-      <span v-if="userName">@{{ userName }}</span>
-      <span v-else>
+      <!-- <span v-if="acct">Account: {{ acct.substring(0, 16) }}...</span> -->
+      <div v-if="userName">
+        <div>@{{ userName }}</div>
+        <div v-if="balance">{{ balance }}</div>
+        <div v-else>
+          <button class="btn">CLAIM 500 TOKENS</button>
+        </div>
+      </div>
+      <div v-else>
         <button class="btn" @click="handleLogin">Sign in with Twitter</button>
-      </span>
+      </div>
     </div>
   </div>
 </template>
@@ -20,7 +26,7 @@ export default {
   name: 'Header',
 
   computed: {
-    ...mapGetters(['user', 'account']),
+    ...mapGetters(['user', 'account', 'balance']),
     userName() {
       console.log(this.user)
       if (this.user) {
