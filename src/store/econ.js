@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default {
   getters: {
     balance: state => state.balance
@@ -9,7 +11,8 @@ export default {
     balance: 0
   },
   actions: {
-    getBalance: getBalance
+    getBalance: getBalance,
+    sendTransaction: sendTransaction
   }
 }
 
@@ -33,4 +36,31 @@ function getBalance({ commit, rootState }) {
 
 function setBalance(state, newBalance) {
   state.balance = Number(newBalance)
+}
+
+function sendTransaction({ rootState }, transaction) {
+  console.log(rootState.Contract._address)
+  var params = {
+    method: 'POST',
+    url: `${process.env.SERVER}/transact`,
+    headers: {
+      Authorization: rootState.idToken
+    },
+    data: {
+      contract: rootState.Contract._address,
+      clientId: rootState.user.username,
+      transaction: transaction.encodeABI()
+    }
+  }
+  console.log(params)
+  return new Promise((resolve, reject) => {
+    axios(params)
+      .then(response => {
+        resolve(response)
+      })
+      .catch(e => {
+        console.log(e)
+        reject(e)
+      })
+  })
 }

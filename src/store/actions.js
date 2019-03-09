@@ -62,7 +62,7 @@ export default {
   checkAccount({ commit, state }) {
     window.web3.eth.getAccounts((error, accounts) => {
       console.log('genesis accounts:', accounts)
-      console.log('USING account ' + this.account)
+      console.log('USING account ' + state.account)
       console.log('Contract methods debug:', state.Contract)
       if (error) {
         console.error(error)
@@ -151,15 +151,61 @@ export default {
         // }
         data: { handle: state.user.username }
       }
-      var response = await axios(params).catch(error => {
-        console.log(error)
-        loginErr = true
-        reject(error)
+      var response = await new Promise(async (innerResolve, innerReject) => {
+        axios(params)
+          .then(response => {
+            innerResolve(response)
+          })
+          .catch(error => {
+            console.log(error)
+            loginErr = true
+            innerReject(error)
+          })
       })
       console.log(response)
-      commit('USE_ACCOUNT', response.data)
+      var address = response.data
+      commit('USE_ACCOUNT', address)
+      console.log(state.account)
+      var balance = await dispatch('getBalance')
+
+      // Register New User
+      var registeredUsers = await state.Contract.methods
+        .getRegisteredUsers()
+        .call({ from: state.account })
+        .catch(error => {
+          console.log(error)
+          loginErr = true
+          reject(error)
+        })
+      if (loginErr) return
+      console.log('contract getRegisteredUsers() result: ', registeredUsers)
+      for (var i = 0; i < registeredUsers.length; i++) {
+        if (registeredUsers[i] === address) {
+          reject('User already registered')
+          alert('User already registered. Something is wrong.')
+          return
+        }
+      }
+
+      if (balance > 0) {
+        resolve(response)
+        return
+      }
+
+      var methodBuild = state.Contract.methods.registerUser(address)
+      console.log(methodBuild)
+      var uploadError
+      var transResult = await dispatch('sendTransaction', methodBuild).catch(
+        error => {
+          console.log(error)
+          uploadError = true
+          reject(error)
+        }
+      )
+      if (uploadError) return
+      console.log(transResult)
       dispatch('getBalance')
-      resolve(response)
+      resolve(transResult)
     })
   }
 }
