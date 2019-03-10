@@ -22,6 +22,17 @@ exports.handler = async (event) => {
 
     return genResponse(200, data);
   }
+  else if (event.queryStringParameters.action === 'retweet') {
+    var data = await retweet(event)
+      .catch(error => {
+        console.log(error);
+        keyError = true;
+      });
+    if (keyError) return genResponse(400, 'Error accessing Twitter API');
+    // console.log(data);
+
+    return genResponse(200, data);
+  }
   return genResponse(400, 'params needs to have statusId and action');
 };
 
@@ -62,6 +73,7 @@ function likeStatus(event) {
       resolve(data)
     });
   });
+}
 
 function retweet(event) {
   var T = new Twit({
