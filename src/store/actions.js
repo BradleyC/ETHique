@@ -59,11 +59,14 @@ export default {
     }, 3000)
   },
 
-  checkAccount({ commit, state }) {
+  checkAccount({ commit, dispatch, state }) {
     window.web3.eth.getAccounts((error, accounts) => {
       console.log('genesis accounts:', accounts)
       console.log('USING account ' + state.account)
       console.log('Contract methods debug:', state.Contract)
+      console.log('updated balance')
+      dispatch('getBalance')
+
       if (error) {
         console.error(error)
         console.log(commit, state)

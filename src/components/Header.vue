@@ -52,6 +52,7 @@ export default {
   background: $color2;
   justify-content: space-between;
   padding: 10px 0;
+  position: fixed;
 
   .logo h3 {
     font-size: 2em;
