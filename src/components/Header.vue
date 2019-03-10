@@ -1,12 +1,12 @@
 <template>
   <div class="header">
     <div class="logo">
-      <h3>🥐 Éthique</h3>
+      <h3>🥐 Éthique α</h3>
     </div>
     <div class="address">
       <div v-if="userName">
         <div>{{ userName }}</div>
-        <div v-if="balance">{{ balance }}</div>
+        <div v-if="balance">💰{{ balance }}</div>
         <div v-else>
           <p>🤡</p>
         </div>
@@ -53,6 +53,11 @@ export default {
   justify-content: space-between;
   padding: 10px 0;
 
+  .logo h3 {
+    font-size: 2em;
+    margin: 0.4em;
+  }
+
   .logo,
   .address {
     margin: 0 20px;
@@ -60,11 +65,11 @@ export default {
 
   .address {
     display: flex;
+    font-size: 1.4em;
 
     span {
       color: $color1;
       margin: auto 10px;
-      font-size: 12pt;
     }
   }
   .btn {

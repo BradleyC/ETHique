@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="box">
-      <!-- <img :src="post.user.profile_image_url_https" /> -->
+      <img :src="post.user.profile_image_url_https" />
       <h3>{{ post.user.name }}</h3>
       <h4>@{{ post.user.screen_name }}</h4>
       <p>{{ post.full_text }}</p>
@@ -15,7 +15,6 @@
           <span>Like</span>
         </button>
       </div>
-      <p>Favorited: {{ post.favorited }}</p>
     </div>
   </div>
 </template>
@@ -71,12 +70,25 @@ h2 {
   box-shadow: 0 1px 7px -2px rgba(0, 0, 0, 0.3);
   padding: 20px;
   width: 30vw;
-  min-width: 300px;
+  min-width: 640px;
   margin: auto;
   margin-bottom: 20px;
 
   h3 {
     margin: 0 0 10px;
+    display: inline;
+  }
+
+  h4 {
+    display: inline;
+    margin: 0 0.5em;
+    font-weight: normal;
+    color: #555;
+  }
+
+  p {
+    margin: 0.7em;
+    text-align: left;
   }
 
   .form {
@@ -111,22 +123,22 @@ h2 {
   min-width: 80px;
 }
 
-.copy {
-  h4 {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    margin: 0 0 5px;
-  }
-}
+// .copy {
+//   h4 {
+//     max-width: 100%;
+//     overflow: hidden;
+//     text-overflow: ellipsis;
+//     white-space: nowrap;
+//     margin: 0 0 5px;
+//   }
+// }
 
 .engage {
   height: 30px;
 }
 .engage-btn {
   display: flex;
-  align-items: center;
+  align-items: left;
   height: 100%;
   justify-content: space-around;
   padding: 1px;
