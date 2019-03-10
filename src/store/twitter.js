@@ -82,8 +82,11 @@ function updateFeedwLike(state, data) {
   }
 }
 
-function likeStatus({ commit, rootState }, statusObj) {
+async function likeStatus({ commit, dispatch, rootState }, statusObj) {
   console.log(statusObj)
+  await dispatch('interactTransaction', statusObj.user.screen_name)
+
+  if (dispatch) return
   var params = {
     method: 'POST',
     url: process.env.SERVER + '/tweets',
