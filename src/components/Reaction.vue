@@ -1,13 +1,19 @@
 <template>
   <div class="reaction-unit">
     <div class="spending">
-      <img class="increment increase"
-           @click="increment(true)"
-           src="../../scss/openmojis/F0000.svg" alt="Increase">
+      <img
+        class="increment increase"
+        @click="increment(true)"
+        src="../static/F0000.svg"
+        alt="Increase"
+      />
       <p class="p-centered-text">{{ voteStake }}</p>
-      <img class="increment decrease"
-           @click="increment()"
-           src="../../scss/openmojis/F0000.svg" alt="Decrease">
+      <img
+        class="increment decrease"
+        @click="increment()"
+        src="../static/F0000.svg"
+        alt="Decrease"
+      />
     </div>
   </div>
 </template>
@@ -46,22 +52,22 @@ export default {
         return
       }
       if (this.voteStake > 0) this.voteStake--
-    },
+    }
     /**
      * Send vote to chain. The state/store will update the post in place in view
      * TODO: fixxxxx this to be a new lambda function
      */
-    async onVote() {
-      if (!this.voteStake) {
-        alert('Please confirm your vote stake')
-        return
-      }
-      await this.vote({
-        postId: this.postId,
-        voteType: this.voteType,
-        voteStake: this.voteStake
-      }).catch(error => console.log(error))
-    }
+    // async onVote() {
+    //   if (!this.voteStake) {
+    //     alert('Please confirm your vote stake')
+    //     return
+    //   }
+    //   await this.vote({
+    //     postId: this.postId,
+    //     voteType: this.voteType,
+    //     voteStake: this.voteStake
+    //   }).catch(error => console.log(error))
+    // }
   }
 }
 </script>

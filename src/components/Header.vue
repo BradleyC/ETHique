@@ -5,7 +5,7 @@
     </div>
     <div class="address">
       <div v-if="userName">
-        <div>{{ userName }}</div>
+        <div>@{{ userName }}</div>
         <div v-if="balance">💰{{ balance }}</div>
         <div v-else>
           <p>🤡</p>

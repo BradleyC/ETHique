@@ -73,7 +73,7 @@ contract Ethique {
     }
 
     function registerUser(address payable _newUser) public returns (bool success) {
-        require(!registrationIndex[_newUser], "only one registration");
+        require(registrationIndex[_newUser] != true, "only one registration");
         registeredUsers.push(_newUser);
         registrationIndex[_newUser] = true;
         _transfer(address(this), _newUser, 500);
@@ -81,7 +81,7 @@ contract Ethique {
         return true;
     } 
 
-    function getRegisteredUsers() public onlyOwner(msg.sender) returns (address[] memory users) {
+    function getRegisteredUsers() public view onlyOwner(msg.sender) returns (address[] memory users) {
         return registeredUsers;
     }
 
@@ -94,12 +94,12 @@ contract Ethique {
     }
 
     modifier onlyRegisteredUser(address _user) {
-        require(registrationIndex[_user] = true, "please register to use this route");
+        require(registrationIndex[_user] == true, "please register to use this route");
         _;
     }
 
     modifier onlyOwner(address _user) {
-        require(owners[_user] = true, "please register to use this route");
+        require(owners[_user] == true, "please register to use this route");
         _;
     }
 
@@ -111,7 +111,7 @@ contract Ethique {
         balanceOf[_from] -= _value;
         balanceOf[_to] += _value;
         emit Transfer(_from, _to, _value);
-        // assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
+        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
     }
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
