@@ -66,7 +66,7 @@ function sendTransaction({ rootState }, transaction) {
   })
 }
 
-async function interactTransaction({ rootState }, recipient) {
+async function interactTransaction({ dispatch, rootState }, recipient) {
   // First retrieve recipient reference
   var params = {
     method: 'POST',
@@ -74,7 +74,7 @@ async function interactTransaction({ rootState }, recipient) {
     data: { handle: recipient }
   }
   var loginErr
-  var response = await new Promise(async (innerResolve, innerReject) => {
+  var recipientCall = await new Promise(async (innerResolve, innerReject) => {
     axios(params)
       .then(innerResponse => {
         innerResolve(innerResponse)
@@ -86,8 +86,27 @@ async function interactTransaction({ rootState }, recipient) {
       })
   })
   if (loginErr) return
-  console.log(response)
-  var address = response.data
+  console.log(recipientCall)
+  var recipAddress = recipientCall.data
+
   // Then do Contract token transfer
-  console.log(address, rootState.Contract)
+  var methodBuild = rootState.Contract.methods.interact(
+    rootState.account,
+    recipAddress,
+    5
+  )
+
+  return new Promise(async (resolve, reject) => {
+    var transResult = await dispatch('sendTransaction', methodBuild).catch(
+      error => {
+        console.log(error)
+        loginErr = true
+        reject(error)
+      }
+    )
+    if (loginErr) return
+    console.log(transResult)
+    dispatch('getBalance')
+    resolve(transResult)
+  })
 }
