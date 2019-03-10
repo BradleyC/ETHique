@@ -62,4 +62,26 @@ function likeStatus(event) {
       resolve(data)
     });
   });
+
+function retweet(event) {
+  var T = new Twit({
+    consumer_key:         process.env.API_KEY,
+    consumer_secret:      process.env.API_SECRET,
+    access_token:         event.headers.oauth_token,
+    access_token_secret:  event.headers.oauth_consumer_key,
+    timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+    // strictSSL:            true,     // optional - requires SSL certificates to be valid.
+  });
+  var params = { id: event.queryStringParameters.statusId };
+  return new Promise(async (resolve, reject) => {
+    T.post('statuses/retweet/:id', params, function(err, data, response) {
+      if (err) {
+        console.log(err);
+        reject(err);
+        return;
+      }
+      console.log(data)
+      resolve(data)
+    });
+  });
 }

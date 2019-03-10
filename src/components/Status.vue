@@ -15,6 +15,16 @@
           <span>Like</span>
         </button>
       </div>
+      <div class="engage">
+        <button v-if="post.retweeted" class="btn engage-btn" disabled>
+          <img src="../static/267Bc.svg" />
+          <span>Retweeted</span>
+        </button>
+        <button v-else class="btn engage-btn" @click="retweet(post)">
+          <img src="../static/267B.svg" />
+          <span>Retweet</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>
@@ -24,6 +34,7 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Status',
+  components: 'Reaction',
   props: {
     post: {
       type: Object,
@@ -32,13 +43,6 @@ export default {
       }
     }
   },
-
-  // computed: {
-  //   ...mapGetters(['statusFeed'])
-  // },
-  // mounted() {
-  //   this.getPosts()
-  // },
 
   methods: {
     ...mapActions(['likeStatus'])
@@ -135,9 +139,9 @@ h2 {
 
 .engage {
   height: 30px;
+  display: inline;
 }
 .engage-btn {
-  display: flex;
   align-items: left;
   height: 100%;
   justify-content: space-around;

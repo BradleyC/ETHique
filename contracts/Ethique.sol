@@ -73,7 +73,7 @@ contract Ethique {
     }
 
     function registerUser(address payable _newUser) public returns (bool success) {
-        require(!registrationIndex[_newUser], "only one registration");
+        require(registrationIndex[_newUser] != true, "only one registration");
         registeredUsers.push(_newUser);
         registrationIndex[_newUser] = true;
         _transfer(address(this), _newUser, 500);
@@ -81,7 +81,7 @@ contract Ethique {
         return true;
     } 
 
-    function getRegisteredUsers() public onlyOwner(msg.sender) returns (address[] memory users) {
+    function getRegisteredUsers() public view onlyOwner(msg.sender) returns (address[] memory users) {
         return registeredUsers;
     }
 
@@ -94,12 +94,12 @@ contract Ethique {
     }
 
     modifier onlyRegisteredUser(address _user) {
-        require(registrationIndex[_user] = true, "please register to use this route");
+        require(registrationIndex[_user] == true, "please register to use this route");
         _;
     }
 
     modifier onlyOwner(address _user) {
-        require(owners[_user] = true, "please register to use this route");
+        require(owners[_user] == true, "please register to use this route");
         _;
     }
 
