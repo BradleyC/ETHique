@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <span>Created with ♥ by <a href="https://gitlab.com/TrevorJTClarke">@trevorjtclarke</a>, <a href="https://gitlab.com/TrevorJTClarke/truffle-demo-dapp">Fork this Repo!</a></span>
+    <span>Made for you. 🍃 Let's make the world better together.</span>
   </footer>
 </template>
 

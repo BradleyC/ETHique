@@ -40,5 +40,14 @@ export default {
       arr.splice(idx, 1)
       state.items = arr
     }
+  },
+  SET_PROVIDER(state, provider) {
+    state.provider = provider
+  },
+  SET_USER(state, user) {
+    state.user = user
+  },
+  SET_TOKEN(state, accessToken) {
+    state.accessToken = accessToken
   }
 }

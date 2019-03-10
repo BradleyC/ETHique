@@ -1,63 +1,27 @@
 <template>
-  <div class="container">
-    <h2>ImageRegistry</h2>
-
-    <div class="box">
-      <h3>Add Asset</h3>
-      <div class="form">
-        <input type="text" name="ref" v-model="newRef" placeholder="Image Address">
-        <input type="text" name="id" v-model="newId" placeholder="Image ID">
-        <button class="btn" @click="addAssetItem">Submit</button>
-      </div>
-    </div>
-
-    <div class="list">
-      <div class="list-item" v-for="item in items">
-        <div class="asset">
-          <img :src="getImagePath(item)">
-        </div>
-        <div class="copy">
-          <h4>Ref: {{ item.ref }}</h4>
-          <p>ID: {{ item.id }}</p>
-        </div>
-        <button class="btn" @click="deleteAsset(item)">Delete</button>
-      </div>
-    </div>
+  <div class="container home-body">
+    <Posts />
   </div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
+import Posts from './Posts.vue'
 export default {
   name: 'Home',
+  components: {
+    Posts
+  },
 
   data() {
-    return {
-      newRef: '0x06012c8cf97bead5deae237070f9587f8e7a266d',
-      newId: 1066650
-    }
+    return {}
   },
 
   computed: {
-    ...mapGetters(['items'])
+    // pass
   },
 
   methods: {
-    ...mapActions(['removeAsset', 'addAsset']),
-    getImagePath(item) {
-      // return `https://img.cryptokitties.co/${item.ref}/${item.id}.svg`
-      return `https://storage.googleapis.com/opensea-prod.appspot.com/${
-        item.ref
-      }/${item.id}.svg`
-    },
-    deleteAsset(item) {
-      this.removeAsset(item)
-    },
-    addAssetItem() {
-      if (!this.newRef || !this.newId) return
-      this.addAsset({ ref: this.newRef, id: parseInt(this.newId) })
-    }
+    // pass
   }
 }
 </script>
@@ -68,7 +32,9 @@ export default {
 .container {
   margin: 20px auto;
 }
-
+.home-body {
+  margin-top: 75px;
+}
 h2 {
   text-align: center;
 }
