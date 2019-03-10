@@ -47,9 +47,6 @@ export default {
   SET_USER(state, user) {
     state.user = user
   },
-  SET_USER_PIC(state, pic) {
-    state.pic = pic
-  },
   SET_TOKEN(state, accessToken) {
     state.accessToken = accessToken
   }

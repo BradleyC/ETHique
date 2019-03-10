@@ -140,7 +140,6 @@ export default {
         key: result.credential.secret
       })
       commit('SET_USER', { username: result.user.displayName })
-      commit('SET_USER_PIC', { pic: result.user.photoURL })
 
       // Send to login API for contract account mgmt
       console.log(state.username)
