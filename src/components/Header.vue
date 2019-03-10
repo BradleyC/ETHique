@@ -4,12 +4,11 @@
       <h3>🥐 Éthique</h3>
     </div>
     <div class="address">
-      <!-- <span v-if="acct">Account: {{ acct.substring(0, 16) }}...</span> -->
       <div v-if="userName">
-        <div>@{{ userName }}</div>
+        <div>{{ userName }}</div>
         <div v-if="balance">{{ balance }}</div>
         <div v-else>
-          <button class="btn">CLAIM 500 TOKENS</button>
+          <p>🤡</p>
         </div>
       </div>
       <div v-else>
@@ -67,6 +66,12 @@ export default {
       margin: auto 10px;
       font-size: 12pt;
     }
+  }
+  .btn {
+    background: $color5;
+    border-radius: $border-radius;
+    color: $white;
+    min-width: 120px;
   }
 }
 </style>

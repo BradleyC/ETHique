@@ -38,13 +38,6 @@ h2 {
   text-align: center;
 }
 
-.btn {
-  background: $color2;
-  border-radius: $border-radius;
-  color: $white;
-  min-width: 120px;
-}
-
 .box {
   background: $white;
   border-radius: $border-radius;
