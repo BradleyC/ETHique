@@ -111,7 +111,7 @@ contract Ethique {
         balanceOf[_from] -= _value;
         balanceOf[_to] += _value;
         emit Transfer(_from, _to, _value);
-        assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
+        // assert(balanceOf[_from] + balanceOf[_to] == previousBalances);
     }
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
