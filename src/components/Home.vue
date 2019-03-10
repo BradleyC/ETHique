@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container home-body">
     <Posts />
   </div>
 </template>
@@ -32,7 +32,9 @@ export default {
 .container {
   margin: 20px auto;
 }
-
+.home-body {
+  margin-top: 75px;
+}
 h2 {
   text-align: center;
 }
