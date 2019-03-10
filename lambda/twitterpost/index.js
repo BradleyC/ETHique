@@ -62,26 +62,4 @@ function likeStatus(event) {
       resolve(data)
     });
   });
-  // var params = {
-  //   method: 'GET',
-  //   url: 'https://api.twitter.com/1.1/statuses/home_timeline.json',
-  //   params: {
-  //     count: 20
-  //   },
-  //   headers: {
-  //     oauth_token: event.headers.oauth_token,
-  //     oauth_consumer_key: process.env.API_KEY
-  //   }
-  // }
-  // return new Promise(async (resolve, reject) => {
-  //   var tokenErr
-  //   var response = await axios(params).catch(error => {
-  //     console.log(error)
-  //     tokenErr = true
-  //     reject(error)
-  //   })
-  //   if (tokenErr) return
-  //   console.log(response)
-  //   console.log(resolve)
-  // })
 }

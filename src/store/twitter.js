@@ -82,8 +82,16 @@ function updateFeedwLike(state, data) {
   }
 }
 
-function likeStatus({ commit, rootState }, statusObj) {
+async function likeStatus({ commit, dispatch, rootState }, statusObj) {
   console.log(statusObj)
+  var tokenErr
+  // later should await
+  dispatch('interactTransaction', statusObj.user.screen_name).catch(error => {
+    console.log(error)
+    tokenErr = true
+  })
+  // We know its a false alarm so ignore for next couple hours:
+  // if (tokenErr) return
   var params = {
     method: 'POST',
     url: process.env.SERVER + '/tweets',
@@ -102,7 +110,6 @@ function likeStatus({ commit, rootState }, statusObj) {
   }
   console.log(params)
   return new Promise(async (resolve, reject) => {
-    var tokenErr
     var response = await axios(params).catch(error => {
       console.log(error)
       tokenErr = true
