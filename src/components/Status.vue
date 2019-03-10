@@ -6,11 +6,11 @@
       <h4>@{{ post.user.screen_name }}</h4>
       <p>{{ post.full_text }}</p>
       <div class="engage">
-        <button v-if="post.favorited" class="btn engage-btn">
+        <button v-if="post.favorited" class="btn engage-btn" disabled>
           <img src="../static/1F31F.svg" />
           <span>Liked</span>
         </button>
-        <button v-else class="btn engage-btn">
+        <button v-else class="btn engage-btn" @click="likeStatus(post)">
           <img src="../static/2B50.svg" />
           <span>Like</span>
         </button>
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-// import { mapActions, mapGetters } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Status',
@@ -32,7 +32,7 @@ export default {
         return {}
       }
     }
-  }
+  },
 
   // computed: {
   //   ...mapGetters(['statusFeed'])
@@ -41,9 +41,9 @@ export default {
   //   this.getPosts()
   // },
 
-  // methods: {
-  //   ...mapActions(['getPosts'])
-  // }
+  methods: {
+    ...mapActions(['likeStatus'])
+  }
 }
 </script>
 

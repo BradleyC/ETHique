@@ -5,13 +5,15 @@ export default {
     statusFeed: state => state.statusFeed
   },
   mutations: {
-    UPDATE_FEED: updateFeed
+    UPDATE_FEED: updateFeed,
+    UPDATE_FEED_W_LIKE: updateFeedwLike
   },
   state: {
     statusFeed: []
   },
   actions: {
-    getPosts: getPosts
+    getPosts: getPosts,
+    likeStatus: likeStatus
   }
 }
 /**
@@ -45,7 +47,6 @@ async function getPosts({ commit, rootState }) {
     console.log('waiting for twitter auth')
     await waitFor()
   }
-  console.log(rootState.accessToken)
   var params = {
     method: 'GET',
     url: process.env.SERVER + '/tweets',
@@ -72,28 +73,49 @@ async function getPosts({ commit, rootState }) {
 function updateFeed(state, data) {
   state.statusFeed = data
 }
+function updateFeedwLike(state, data) {
+  for (var i = 0; i < state.statusFeed.length; i++) {
+    if (state.statusFeed[i].id_str === data.id_str) {
+      state.statusFeed[i].favorited = true
+      break
+    }
+  }
+}
 
-// function requestToken() {
-//   var params = {
-//     method: 'POST',
-//     url: 'https://api.twitter.com/oauth/request_token',
-//     params: {
-//       oauth_consumer_key: process.env.TWITTER,
-//       oauth_callback: 'http://localhost:4000'
-//     }
-//   }
-//   return new Promise(async (resolve, reject) => {
-//     var tokenErr
-//     var response = await axios(params).catch(error => {
-//       console.log(error)
-//       tokenErr = true
-//       reject(error)
-//     })
-//     if (tokenErr) return
-//     console.log(response)
-//   })
-// }
-// }
+function likeStatus({ commit, rootState }, statusObj) {
+  console.log(statusObj)
+  var params = {
+    method: 'POST',
+    url: process.env.SERVER + '/tweets',
+    headers: {
+      oauth_token: rootState.accessToken.token,
+      oauth_consumer_key: rootState.accessToken.key
+    },
+    params: {
+      action: 'favorite'
+    }
+  }
+  if (statusObj.retweeted) {
+    params.params.statusId = statusObj.retweeted_status.id_str
+  } else {
+    params.params.statusId = statusObj.id_str
+  }
+  console.log(params)
+  return new Promise(async (resolve, reject) => {
+    var tokenErr
+    var response = await axios(params).catch(error => {
+      console.log(error)
+      tokenErr = true
+      reject(error)
+    })
+    if (tokenErr) return
+
+    console.log(response)
+    commit('UPDATE_FEED_W_LIKE', response.data)
+    resolve(true)
+  })
+}
+
 function waitFor() {
   return new Promise(resolve => setTimeout(resolve, 200))
 }
