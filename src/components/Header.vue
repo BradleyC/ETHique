@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div class="logo">
-      <h3>🥐 Éthique α</h3>
+      <h3>🥐 Éthique</h3>
     </div>
     <div class="address">
       <div v-if="userName">
