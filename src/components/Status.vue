@@ -15,6 +15,16 @@
           <span>Like</span>
         </button>
       </div>
+      <div class="engage">
+        <button v-if="post.retweeted" class="btn engage-btn" disabled>
+          <img src="../static/267B.svg" />
+          <span>Retweeted</span>
+        </button>
+        <button v-else class="btn engage-btn" @click="retweet(post)">
+          <img src="../static/267Bc.svg" />
+          <span>Retweet</span>
+        </button>
+      </div>
     </div>
   </div>
 </template>

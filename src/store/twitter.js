@@ -13,7 +13,8 @@ export default {
   },
   actions: {
     getPosts: getPosts,
-    likeStatus: likeStatus
+    likeStatus: likeStatus,
+    retweet: retweet
   }
 }
 /**
@@ -112,6 +113,40 @@ function likeStatus({ commit, rootState }, statusObj) {
 
     console.log(response)
     commit('UPDATE_FEED_W_LIKE', response.data)
+    resolve(true)
+  })
+}
+
+function retweet({ commit, rootState }, statusObj) {
+  console.log(statusObj)
+  var params = {
+    method: 'POST',
+    url: process.env.SERVER + '/tweets',
+    headers: {
+      oauth_token: rootState.accessToken.token,
+      oauth_consumer_key: rootState.accessToken.key
+    },
+    params: {
+      action: 'retweet'
+    }
+  }
+  if (statusObj.retweeted) {
+    params.params.statusId = statusObj.retweeted_status.id_str
+  } else {
+    params.params.statusId = statusObj.id_str
+  }
+  console.log(params)
+  return new Promise(async (resolve, reject) => {
+    var tokenErr
+    var response = await axios(params).catch(error => {
+      console.log(error)
+      tokenErr = true
+      reject(error)
+    })
+    if (tokenErr) return
+
+    console.log(response)
+    commit('UPDATE_FEED_W_RT', response.data)
     resolve(true)
   })
 }

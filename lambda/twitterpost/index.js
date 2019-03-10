@@ -62,26 +62,26 @@ function likeStatus(event) {
       resolve(data)
     });
   });
-  // var params = {
-  //   method: 'GET',
-  //   url: 'https://api.twitter.com/1.1/statuses/home_timeline.json',
-  //   params: {
-  //     count: 20
-  //   },
-  //   headers: {
-  //     oauth_token: event.headers.oauth_token,
-  //     oauth_consumer_key: process.env.API_KEY
-  //   }
-  // }
-  // return new Promise(async (resolve, reject) => {
-  //   var tokenErr
-  //   var response = await axios(params).catch(error => {
-  //     console.log(error)
-  //     tokenErr = true
-  //     reject(error)
-  //   })
-  //   if (tokenErr) return
-  //   console.log(response)
-  //   console.log(resolve)
-  // })
+
+function retweet(event) {
+  var T = new Twit({
+    consumer_key:         process.env.API_KEY,
+    consumer_secret:      process.env.API_SECRET,
+    access_token:         event.headers.oauth_token,
+    access_token_secret:  event.headers.oauth_consumer_key,
+    timeout_ms:           60*1000,  // optional HTTP request timeout to apply to all requests.
+    // strictSSL:            true,     // optional - requires SSL certificates to be valid.
+  });
+  var params = { id: event.queryStringParameters.statusId };
+  return new Promise(async (resolve, reject) => {
+    T.post('statuses/retweet/:id', params, function(err, data, response) {
+      if (err) {
+        console.log(err);
+        reject(err);
+        return;
+      }
+      console.log(data)
+      resolve(data)
+    });
+  });
 }
