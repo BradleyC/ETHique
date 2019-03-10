@@ -45,7 +45,7 @@ export default {
   },
 
   methods: {
-    ...mapActions(['likeStatus'])
+    ...mapActions(['likeStatus', 'retweet'])
   }
 }
 </script>

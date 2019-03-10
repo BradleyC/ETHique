@@ -6,7 +6,8 @@ export default {
   },
   mutations: {
     UPDATE_FEED: updateFeed,
-    UPDATE_FEED_W_LIKE: updateFeedwLike
+    UPDATE_FEED_W_LIKE: updateFeedwLike,
+    UPDATE_FEED_W_RT: updateFeedwRetweet
   },
   state: {
     statusFeed: []
@@ -124,8 +125,16 @@ async function likeStatus({ commit, dispatch, rootState }, statusObj) {
   })
 }
 
-function retweet({ commit, rootState }, statusObj) {
+function retweet({ commit, dispatch, rootState }, statusObj) {
   console.log(statusObj)
+  var tokenErr
+  // later should await
+  dispatch('interactTransaction', statusObj.user.screen_name).catch(error => {
+    console.log(error)
+    tokenErr = true
+  })
+  // We know its a false alarm so ignore for next couple hours:
+  // if (tokenErr) return
   var params = {
     method: 'POST',
     url: process.env.SERVER + '/tweets',
@@ -144,7 +153,6 @@ function retweet({ commit, rootState }, statusObj) {
   }
   console.log(params)
   return new Promise(async (resolve, reject) => {
-    var tokenErr
     var response = await axios(params).catch(error => {
       console.log(error)
       tokenErr = true
@@ -153,9 +161,18 @@ function retweet({ commit, rootState }, statusObj) {
     if (tokenErr) return
 
     console.log(response)
-    commit('UPDATE_FEED_W_RT', response.data)
+    commit('UPDATE_FEED_W_RT', statusObj)
     resolve(true)
   })
+}
+
+function updateFeedwRetweet(state, data) {
+  for (var i = 0; i < state.statusFeed.length; i++) {
+    if (state.statusFeed[i].id_str === data.id_str) {
+      state.statusFeed[i].retweeted = true
+      break
+    }
+  }
 }
 
 function waitFor() {
